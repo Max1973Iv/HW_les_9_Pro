@@ -1,6 +1,5 @@
 # Базовый класс User и производные классы для различных типов пользователей
-#import hashlib
-#import uuid
+#
 import bcrypt
 #
 class User:
@@ -22,10 +21,6 @@ class User:
         self.password = self.hash_password(password)  # Хешируем пароль при создании пользователя
         User.users.append(self)          
         print(f"users_Пользователь {self.username} успешно создан.")
-#        print(f"users_Ошибка создания пользователя: {e}")
-#            return None
-#        User.users.append(self)
-#        self.password = self.hash_password(password)  # Хешируем пароль при создании пользователя
 #
     @staticmethod
     def hash_password(password):

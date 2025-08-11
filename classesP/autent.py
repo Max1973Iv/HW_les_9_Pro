@@ -4,14 +4,24 @@ class AuthenticationService:
     # список созданных сессий
     sessions = []
     #
-    def __init__(self):
-        #
+    def __init__(self,username=None):
+        self.username = username # имя пользователя
         AuthenticationService.sessions.append(self) # Добавляем сессию в список открытых сессий
         print(f"aut_Сессия {self.x_time()} начата.")
         """
         Инициализация сервиса аутентификации. экземпляр класса - сессия.
         """
-#
+    @classmethod
+    def show_sessions(cls):
+        """
+        Метод для отображения всех открытых сессий.
+        """
+        if not cls.sessions:
+            print("aut_sh_Нет открытых сессий.")
+        else:
+            print("aut_sh_Открытые сессии:")
+            for session in cls.sessions:
+                print(f"aut_sh_Сессия {session[0]} начата: {session.x_time()}")
 #    def __del__(self):
 #        print(f'сессия завершена:время окончания сессии: {self.x_time()}')
 #
