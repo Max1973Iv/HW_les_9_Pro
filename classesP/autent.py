@@ -21,7 +21,7 @@ class AuthenticationService:
         else:
             print("aut_sh_Открытые сессии:")
             for session in cls.sessions:
-                print(f"aut_sh_Сессия {session[0]} начата: {session.x_time()}")
+                print(f"aut_sh_Сессия {session} начата: {session.x_time()}")
 #    def __del__(self):
 #        print(f'сессия завершена:время окончания сессии: {self.x_time()}')
 #
