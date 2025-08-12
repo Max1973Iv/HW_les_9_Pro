@@ -34,11 +34,11 @@ class AuthenticationService:
         else:
             print("aut_sh_Открытые сессии:")
             for session in cls.sessions:
-                print(f"aut_sh_Сессия {session} пользователя '{session.username}' начата в {session.start_time} ")
+                print(f"aut_sh_Сессия {session} пользователя '{session.username}' начата в {session.start_time} завершена в {session.fin_time if session.fin_time else 'еще не завершена'}")
 #    
 #
     def x_time(self):
-        """ Возвращает дату и время события.
+        """ Возвращает дату и время события сессии
         """
         return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 #        
