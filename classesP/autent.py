@@ -4,13 +4,26 @@ class AuthenticationService:
     # список созданных сессий
     sessions = []
     #
-    def __init__(self,username=None):
+    def __init__(self,username=None,start_time=None,fin_time=None):
         self.username = username # имя пользователя
+        self.start_time = start_time # время начала сессии
+        self.fin_time = fin_time # время окончания сессии
+        self.start_time = self.x_time() # устанавливаем время начала сессии
         AuthenticationService.sessions.append(self) # Добавляем сессию в список открытых сессий
-        print(f"aut_Сессия {self.x_time()} начата.")
+        print(f"aut_Сессия создана и начата в: {self.start_time}")
         """
         Инициализация сервиса аутентификации. экземпляр класса - сессия.
         """
+#    def __del__(self):
+#        print(f"aut_вызван деструктор")
+#        """
+#        Метод для удаления неактуальной сессии.
+#        """
+#        #удалить сессию из списка открытых сессий
+#        AuthenticationService.sessions.remove(self)
+#        #
+#        print(f'aut_неактуальная сессия удалена')#: {self.fin_time}')#:время окончания сессии: {self.x_time()}')
+#        
     @classmethod
     def show_sessions(cls):
         """
@@ -21,9 +34,8 @@ class AuthenticationService:
         else:
             print("aut_sh_Открытые сессии:")
             for session in cls.sessions:
-                print(f"aut_sh_Сессия {session} начата: {session.x_time()}")
-#    def __del__(self):
-#        print(f'сессия завершена:время окончания сессии: {self.x_time()}')
+                print(f"aut_sh_Сессия {session} пользователя '{session.username}' начата в {session.start_time} ")
+#    
 #
     def x_time(self):
         """ Возвращает дату и время события.
