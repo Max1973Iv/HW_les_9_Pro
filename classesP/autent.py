@@ -1,18 +1,29 @@
-# Класс - сервис управления регистрацией и аутентификацией пользователей
+'''Класс - сервис управления регистрацией и аутентификацией пользователей
+   Сервис аутентификации, который позволяет регистрировать пользователей и управлять сессиями.
+   Содержит методы для создания сессий, регистрации пользователей и отображения ?? сессий.
+   Сессии хранятся в статическом списке, что позволяет отслеживать ?? сессии.
+   При регистрации пользователя проверяется корректность введенных данных и создается экземпляр соответствующего класса пользователя.
+   Сервис поддерживает два класса пользователей: Customer и Admin.'''
 from datetime import datetime
 class AuthenticationService:
     # список созданных сессий
     sessions = []
     #
-    def __init__(self,username=None,start_time=None,fin_time=None):
+    def __init__(self,username=None,start_time=None,fin_time=None,status_session='active_ses'):
         self.username = username # имя пользователя
         self.start_time = start_time # время начала сессии
         self.fin_time = fin_time # время окончания сессии
         self.start_time = self.x_time() # устанавливаем время начала сессии
-        AuthenticationService.sessions.append(self) # Добавляем сессию в список открытых сессий
+        self.status_session = status_session # статус сессии
+        # Добавляем текущую сессию в список открытых сессий
+        AuthenticationService.sessions.append(self)
         print(f"aut_Сессия создана и начата в: {self.start_time}")
         """
         Инициализация сервиса аутентификации. экземпляр класса - сессия.
+        Сессия содержит информацию о пользователе, времени начала сессии и статусе сессии.
+        status_session может быть 'error_ses' (сессия завершенная после ошибки регистрации или аутентификации)'active_ses' (активная) или 'completed_ses' (завершенная).
+        По числу error-сессий идущих подряд можно отслеживать поведение пользователя, который несколько раз
+        делал попытки регистрации с неверными данными.
         """
 #    def __del__(self):
 #        print(f"aut_вызван деструктор")
@@ -27,14 +38,15 @@ class AuthenticationService:
     @classmethod
     def show_sessions(cls):
         """
-        Метод для отображения всех открытых сессий.
+        Метод для отображения всех сессий в статическом списке sessions.
+        Если список пуст, выводит сообщение об отсутствии открытых сессий.
         """
         if not cls.sessions:
             print("aut_sh_Нет открытых сессий.")
         else:
-            print("aut_sh_Открытые сессии:")
+            print("aut_sh_Созданные сессии:")
             for session in cls.sessions:
-                print(f"aut_sh_Сессия {session} пользователя '{session.username}' начата в {session.start_time} завершена в {session.fin_time if session.fin_time else 'еще не завершена'}")
+                print(f"aut_sh_Сессия {session.status_session} пользователя '{session.username}' начата в {session.start_time} завершена в {session.fin_time if session.fin_time else 'еще не завершена'}")
 #    
 #
     def x_time(self):
@@ -59,10 +71,14 @@ class AuthenticationService:
                     raise ValueError("Имя пользователя, email и пароль не могут быть пустыми.")
             except ValueError as e:
                 print(f"Ошибка регистрации: {e}")
+                self.fin_time = self.x_time()  # устанавливаем время окончания сессии
+                self.status_session = 'error_ses'  # устанавливаем статус сессии как 'error_ses'
                 return False, None
             #
         except ValueError as ee:
             print(f"Ошибка регистрации: {ee}")
+            self.fin_time = self.x_time()  # устанавливаем время окончания сессии
+            self.status_session = 'error_ses'  # устанавливаем статус сессии как 'error_ses'
             return False, None
 #
         print(f"aut_значение user_class {user_class}")
@@ -70,17 +86,26 @@ class AuthenticationService:
             from classesP.users import Customer
             try:
                 user_new = Customer(username=username, email=email, password=password, **kwargs)
+                self.fin_time = self.x_time()  # устанавливаем время окончания сессии
+                self.status_session = 'completed_ses'  # устанавливаем статус сессии как 'completed_ses'
                 return True, user_new
             except ValueError as ae:
                 print(f"aut_Ошибка создания пользователя: {ae}")
+                self.fin_time = self.x_time()  # устанавливаем время окончания сессии
+                self.status_session = 'error_ses'  # устанавливаем статус сессии как 'error_ses'
                 return False, None
         if user_class == "Admin":
             from classesP.users import Admin
             try:
                 user_new = Admin(username=username, email=email, password=password, **kwargs)
+                self.fin_time = self.x_time()  # устанавливаем время окончания сессии
+                self.status_session = 'completed_ses'  # устанавливаем статус сессии как 'completed_ses'
+                # Возвращаем успешный результат регистрации и созданного пользователя
                 return True, user_new
             except ValueError as be:
                 print(f"aut_Ошибка создания пользователя: {be}")
+                self.fin_time = self.x_time()  # устанавливаем время окончания сессии
+                self.status_session = 'error_ses'  # устанавливаем статус сессии как 'error_ses'
                 return False, None
 #
         #
