@@ -22,7 +22,7 @@ print(Admin.get_all_users()) # Выводим список всех пользо
 session_inst = AuthenticationService() # Создаем экземпляр сервиса аутентификации -сессия
 # Регистрация нового пользователя
 #auth_service = auth_service_inst.register(user_class="Customer", username="Василий", email="jhf@by", password="0986667qwerty", address="Минск, ул. Советская, 3")
-auth_service = session_inst.register(user_class="Admin",username="Жора_admin",email="hgf5@8j22h.by", password="098777qwerty", admin_level=4)
+auth_service = session_inst.register(user_class="Admin",username="Вася",email="hgf5@8j22h.by", password="098777qwerty", admin_level=4)
 print(f"sh_Результат регистрации: {auth_service}")
 # Закрываем сессию после регистрации
 session_inst.close_session()
@@ -30,18 +30,6 @@ session_inst.close_session()
 # Выводим список всех пользователей после регистрации нового пользователя
 print("sh_Список всех пользователей после регистрации нового пользователя:")
 print(Admin.get_all_users())
-#        print(f"sh_Пользователь успешно зарегистрирован.")
-#    else:
-#        print(f"sh_Ошибка регистрации,сессия не состоялась:")
-#        del auth_service_inst
-#        print(f"sh_Сессия удалена.")
+#        
 #
-# Выводим список всех пользователей после регистрации нового пользователя
-#print("Список всех пользователей после регистрации нового пользователя:")
-#print(Admin.get_all_users()) # Выводим список всех пользователей
 #
-# вывести список  сессий
-AuthenticationService.show_sessions()
-#    print("Нет открытых сессий.")
-#else:
-#    print(f'открытые сессии: {AuthenticationService.show_sessions()}')

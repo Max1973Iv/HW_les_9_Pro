@@ -13,7 +13,7 @@ class AuthenticationService:
         self.username = username # имя пользователя
         self.start_time = start_time # время начала сессии
         self.fin_time = fin_time # время окончания сессии
-        self.start_time = self.x_time() # устанавливаем время начала сессии
+        self.start_time = self.x_time()+"_st" # устанавливаем время начала сессии
         self.status_session = status_session # статус сессии
         # Добавляем текущую сессию в список открытых сессий
         AuthenticationService.sessions.append(self)
@@ -26,14 +26,11 @@ class AuthenticationService:
         делал попытки регистрации с неверными данными.
         """
     def __del__(self):
-        print(f"aut_вызван деструктор для: {self.username}")
-#        """
-#        Метод для удаления неактуальной сессии.
-#        """
-#        #удалить сессию из списка открытых сессий
-#        AuthenticationService.sessions.remove(self)
-#        #
-#        print(f'aut_неактуальная сессия удалена')#: {self.fin_time}')#:время окончания сессии: {self.x_time()}')
+        print(f"aut_сессия пользователя: {self.username} завершена в {self.fin_time} статус {self.status_session}")
+        """ Метод для удаления сессии
+        Вызывается при удалении экземпляра класса AuthenticationService.
+        выводится время окончания сессии и статус сессии.
+        """
 #        
     @classmethod
     def show_sessions(cls):
@@ -130,10 +127,10 @@ class AuthenticationService:
         """
         if self.status_session=='error_ses':
             print(f"aut_Ошибка регистрации,сессия завершена с ошибкой:")
-            self.fin_time = self.x_time()
+            self.fin_time = self.x_time()+"_fin"
         else:
             self.status_session = 'completed_ses'
             print(f"aut_Сессия завершена успешно.")
-            self.fin_time = self.x_time()   
+            self.fin_time = self.x_time()+"_fin"
         del self # удаляем экземпляр класса
-        print(f"aut_Сессия удалена.")
+        #print(f"aut_Сессия удалена.")
