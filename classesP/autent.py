@@ -46,7 +46,7 @@ class AuthenticationService:
         else:
             print("aut_sh_Созданные сессии:")
             for session in cls.sessions:
-                print(f"aut_sh_Сессия {session.status_session} пользователя '{session.username}' начата в {session.start_time} завершена в {session.fin_time if session.fin_time else 'еще не завершена'}")
+                print(f"aut_sh_Сессия {session.status_session} пользователя '{session.username}' начата в {session.start_time} завершена в {session.fin_time}")# if session.fin_time else 'еще не завершена'}")
 #    
 #
     def x_time(self):
@@ -119,11 +119,17 @@ class AuthenticationService:
                 #self.fin_time = self.x_time()  # устанавливаем время окончания сессии
                 self.status_session = 'error_ses'  # устанавливаем статус сессии как 'error_ses'
                 return False, None
-        # проверяем статус сессии и закрываем сессию
-        # если статус сессии 'error_ses', то сессия завершена с ошибкой
-        # в ином случае сессия завершена успешно - меняем статус на 'completed_ses'
+# проверяем статус сессии и закрываем сессию
+# если статус сессии 'error_ses', то сессия завершена с ошибкой
+# в ином случае сессия завершена успешно - меняем статус на 'completed_ses'
+    def close_session(self):
+        """ Метод для закрытия сессии
+        проверяем статус сессии и закрываем сессию
+        если статус сессии 'error_ses', то сессия завершена с ошибкой
+        в ином случае сессия завершена успешно - меняем статус на 'completed_ses'
+        """
         if self.status_session=='error_ses':
-            print(f"aut_Ошибка регистрации,сессия не состоялась:")
+            print(f"aut_Ошибка регистрации,сессия завершена с ошибкой:")
             self.fin_time = self.x_time()
         else:
             self.status_session = 'completed_ses'
