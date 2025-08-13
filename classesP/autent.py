@@ -5,6 +5,7 @@
    При регистрации пользователя проверяется корректность введенных данных и создается экземпляр соответствующего класса пользователя.
    Сервис поддерживает два класса пользователей: Customer и Admin.'''
 from datetime import datetime
+from classesP.users import User
 class AuthenticationService:
     # список созданных сессий
     sessions = []
@@ -139,3 +140,19 @@ class AuthenticationService:
         Возвращает строку с информацией о пользователе, времени начала и окончания сессии и статусе сессии.
         """
         return f"Сессия пользователя: {self.username}, Начало: {self.start_time}, Окончание: {self.fin_time}, Статус: {self.status_session}"
+#
+    def log_in(self, username, password):
+        """
+        Метод для входа пользователя в систему.
+        :param username: Имя пользователя.
+        :param password: Пароль пользователя.
+        :return: True, если вход успешен, иначе False.
+        """
+        # Проверяем наличие пользователя в списке пользователей
+        user = next((user for user in User.users if user.username == username), None)
+        if user and User.verify_password(user.password, password):
+            print(f"aut_Пользователь {username} успешно вошел в систему.")
+            return True
+        else:
+            print(f"aut_Ошибка входа: неверное имя пользователя или пароль.")
+            return False    

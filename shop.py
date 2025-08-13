@@ -28,5 +28,9 @@ session_inst.close_session()
 print("sh_Список всех пользователей после регистрации нового пользователя:")
 print(Admin.get_all_users())
 #        
-#
+# вход пользователя в систему
+session_inst = AuthenticationService() # Создаем новый экземпляр сервиса аутентификации - сессия
+# Попытка входа пользователя с правильными данными
+auth_service = session_inst.log_in(username="Вася", password="12345qwerty$")
+print(f"sh_Результат входа пользователя: {auth_service}")
 #
