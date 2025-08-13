@@ -25,8 +25,8 @@ class AuthenticationService:
         По числу error-сессий идущих подряд можно отслеживать поведение пользователя, который несколько раз
         делал попытки регистрации с неверными данными.
         """
-#    def __del__(self):
-#        print(f"aut_вызван деструктор")
+    def __del__(self):
+        print(f"aut_вызван деструктор для: {self.username}")
 #        """
 #        Метод для удаления неактуальной сессии.
 #        """
@@ -135,4 +135,5 @@ class AuthenticationService:
             self.status_session = 'completed_ses'
             print(f"aut_Сессия завершена успешно.")
             self.fin_time = self.x_time()   
-#
+        del self # удаляем экземпляр класса
+        print(f"aut_Сессия удалена.")
