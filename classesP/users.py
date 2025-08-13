@@ -55,7 +55,12 @@ class Customer(User):
         self.address = address
 #
     def get_details(self):
-        return f"Клиент: {self.username}, Email: {self.email}, Адрес: {self.address}, Пароль: {self.password}"
+        """
+        Метод для получения деталей клиента.
+        :return: Строка с деталями клиента.
+        вывод хеш_пароля для демонстрации (после отладки нужно убрать)
+        """
+        return f"Клиент: {self.username}, Email: {self.email}, Адрес: {self.address}, хеш_Пароля: {self.password}"
 #
 class Admin(User):
     #type = "Admin"
