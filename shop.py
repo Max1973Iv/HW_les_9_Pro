@@ -24,19 +24,19 @@ print(Admin.get_all_users()) # Выводим список всех пользо
 session_inst = AuthenticationService() # Создаем экземпляр сервиса аутентификации -сессия
 # Регистрация нового пользователя
 #auth_service = auth_service_inst.register(user_class="Customer", username="Василий", email="jhf@by", password="0986667qwerty", address="Минск, ул. Советская, 3")
-auth_service = session_inst.register(user_class="Admin",username="Жора_admin",email="hgf5@8j22h.by", password="098777qwerty", admin_level=4)
+auth_service = session_inst.register(user_class="Adminn",username="Жора_admin",email="hgf5@8j22h.by", password="098777qwerty", admin_level=4)
 print(f"sh_Результат регистрации: {auth_service}")
-if auth_service is not None:  # Проверяем успешность регистрации
-    if auth_service[0]==False:  # Если регистрация не состоялась
-        print(f"sh_Ошибка регистрации,сессия не состоялась:")
-        session_inst.fin_time = session_inst.x_time() # устанавливаем время окончания сессии
-        print(f"sh_время окончания сессии: {session_inst.fin_time}")
-        #print(f"sh_Сессия удалена.")
-    else:  # Если регистрация успешна
-        print(f"sh_Пользователь успешно зарегистрирован.")
+#if auth_service is not None:  # Проверяем успешность регистрации
+#    if auth_service[0]==False:  # Если регистрация не состоялась
+#        print(f"sh_Ошибка регистрации,сессия не состоялась:")
+#        session_inst.fin_time = session_inst.x_time() # устанавливаем время окончания сессии
+#        print(f"sh_время окончания сессии: {session_inst.fin_time}")
+#        #print(f"sh_Сессия удалена.")
+#    else:  # Если регистрация успешна
+#        print(f"sh_Пользователь успешно зарегистрирован.")
         # Выводим список всех пользователей после регистрации нового пользователя
-        print("sh_Список всех пользователей после регистрации нового пользователя:")
-        print(Admin.get_all_users())
+print("sh_Список всех пользователей после регистрации нового пользователя:")
+print(Admin.get_all_users())
 #        print(f"sh_Пользователь успешно зарегистрирован.")
 #    else:
 #        print(f"sh_Ошибка регистрации,сессия не состоялась:")

@@ -56,6 +56,18 @@ class AuthenticationService:
 #        
 # регистрация нового пользователя:
     def register(self,user_class:str, username: str, email: str, password: str,**kwargs):
+        '''
+        Метод для регистрации нового пользователя.
+        :param user_class: Класс пользователя (Customer или Admin)
+        :param username: Имя пользователя.
+        :param email: Email пользователя.
+        :param password: Пароль пользователя.
+        :param kwargs: Дополнительные аргументы для создания пользователя (например, адрес для Customer).
+        :return: Кортеж (успех, пользователь), где успех - булево значение, указывающее на успешность регистрации,
+        а пользователь - созданный экземпляр класса User  или None в случае ошибки.
+        после регистрации устанавливается время окончания сессии и статус сессии.
+        сессия может быть завершена с ошибкой или успешно завершена.
+        '''
         self.user_class = user_class # класс пользователя
         self.username = username # имя пользователя
         self.email = email # email пользователя
@@ -71,13 +83,13 @@ class AuthenticationService:
                     raise ValueError("Имя пользователя, email и пароль не могут быть пустыми.")
             except ValueError as e:
                 print(f"Ошибка регистрации: {e}")
-                self.fin_time = self.x_time()  # устанавливаем время окончания сессии
+                #self.fin_time = self.x_time()  # устанавливаем время окончания сессии
                 self.status_session = 'error_ses'  # устанавливаем статус сессии как 'error_ses'
                 return False, None
             #
         except ValueError as ee:
             print(f"Ошибка регистрации: {ee}")
-            self.fin_time = self.x_time()  # устанавливаем время окончания сессии
+            #self.fin_time = self.x_time()  # устанавливаем время окончания сессии
             self.status_session = 'error_ses'  # устанавливаем статус сессии как 'error_ses'
             return False, None
 #
@@ -86,26 +98,35 @@ class AuthenticationService:
             from classesP.users import Customer
             try:
                 user_new = Customer(username=username, email=email, password=password, **kwargs)
-                self.fin_time = self.x_time()  # устанавливаем время окончания сессии
+                #self.fin_time = self.x_time()  # устанавливаем время окончания сессии
                 self.status_session = 'completed_ses'  # устанавливаем статус сессии как 'completed_ses'
                 return True, user_new
             except ValueError as ae:
                 print(f"aut_Ошибка создания пользователя: {ae}")
-                self.fin_time = self.x_time()  # устанавливаем время окончания сессии
+                #self.fin_time = self.x_time()  # устанавливаем время окончания сессии
                 self.status_session = 'error_ses'  # устанавливаем статус сессии как 'error_ses'
                 return False, None
         if user_class == "Admin":
             from classesP.users import Admin
             try:
                 user_new = Admin(username=username, email=email, password=password, **kwargs)
-                self.fin_time = self.x_time()  # устанавливаем время окончания сессии
+                #elf.fin_time = self.x_time()  # устанавливаем время окончания сессии
                 self.status_session = 'completed_ses'  # устанавливаем статус сессии как 'completed_ses'
                 # Возвращаем успешный результат регистрации и созданного пользователя
                 return True, user_new
             except ValueError as be:
                 print(f"aut_Ошибка создания пользователя: {be}")
-                self.fin_time = self.x_time()  # устанавливаем время окончания сессии
+                #self.fin_time = self.x_time()  # устанавливаем время окончания сессии
                 self.status_session = 'error_ses'  # устанавливаем статус сессии как 'error_ses'
                 return False, None
+        # проверяем статус сессии и закрываем сессию
+        # если статус сессии 'error_ses', то сессия завершена с ошибкой
+        # в ином случае сессия завершена успешно - меняем статус на 'completed_ses'
+        if self.status_session=='error_ses':
+            print(f"aut_Ошибка регистрации,сессия не состоялась:")
+            self.fin_time = self.x_time()
+        else:
+            self.status_session = 'completed_ses'
+            print(f"aut_Сессия завершена успешно.")
+            self.fin_time = self.x_time()   
 #
-        #
