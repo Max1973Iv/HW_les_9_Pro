@@ -46,7 +46,6 @@ class User:
         raise NotImplementedError("Метод get_details должен быть переопределен в производных классах.")
 #
 class Customer(User):
-    #type = "Customer"
     """
     Класс, представляющий клиента, наследующий класс User.
     """
@@ -63,7 +62,6 @@ class Customer(User):
         return f"Клиент: {self.username}, Email: {self.email}, Адрес: {self.address}, хеш_Пароля: {self.password}"
 #
 class Admin(User):
-    #type = "Admin"
     """
     Класс, представляющий администратора, наследующий класс User.
     """
@@ -72,7 +70,7 @@ class Admin(User):
         self.admin_level = admin_level
 #
     def get_details(self):
-        return f"Сотрудник: {self.username}, Email: {self.email}, Admin-Level: {self.admin_level}, Пароль: {self.password}"
+        return f"Сотрудник: {self.username}, Email: {self.email}, Admin-Level: {self.admin_level}, хеш_Пароля: {self.password}"
 #
     @staticmethod
     def get_all_users():

@@ -126,11 +126,16 @@ class AuthenticationService:
         в ином случае сессия завершена успешно - меняем статус на 'completed_ses'
         """
         if self.status_session=='error_ses':
-            print(f"aut_Ошибка регистрации,сессия завершена с ошибкой:")
             self.fin_time = self.x_time()+"_fin"
+            print(f"aut_Ошибка регистрации,сессия {self} завершена с ошибкой")
         else:
             self.status_session = 'completed_ses'
-            print(f"aut_Сессия завершена успешно.")
             self.fin_time = self.x_time()+"_fin"
+            print(f"aut_Сессия {self} завершена успешно.")
         del self # удаляем экземпляр класса
-        #print(f"aut_Сессия удалена.")
+#
+    def __str__(self):
+        """ Метод для строкового представления сессии
+        Возвращает строку с информацией о пользователе, времени начала и окончания сессии и статусе сессии.
+        """
+        return f"Сессия пользователя: {self.username}, Начало: {self.start_time}, Окончание: {self.fin_time}, Статус: {self.status_session}"
