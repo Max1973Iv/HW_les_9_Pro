@@ -41,6 +41,11 @@ session_inst = AuthenticationService()
 auth_service_2 = session_inst.log_in(username="админ_1", password="12345qwerty")
 print(f"sh_Результат входа пользователя: {auth_service_2} : {session_inst}")
 print(session_inst.get_cuurent_user())
+# выводим список всех пользователей
+print(Admin.get_all_users())
+# удаляем пользователя по имени
+Admin.delete_user("Василий")
+print(Admin.get_all_users())
 # закрываем сессию - выход пользователя
 session_inst.log_out()
 # нет открытых сессий?

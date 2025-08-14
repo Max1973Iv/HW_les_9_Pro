@@ -78,3 +78,12 @@ class Admin(User):
         Статический метод для получения списка всех пользователей.
         """
         return [user.get_details() for user in User.users]
+#
+    @staticmethod
+    def delete_user(username):
+        for user in User.users:
+            if user.users==username:
+                User.users.remove(user)
+            return None
+        
+        
