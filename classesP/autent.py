@@ -155,18 +155,19 @@ class AuthenticationService:
         # Проверяем наличие пользователя в списке пользователей
         user = next((user for user in User.users if user.username == username), None)
         if user and User.verify_password(user.password, password):
-            print(f"aut_Пользователь {username} успешно вошел в систему.")
+            print(f"aut_login_Пользователь {username} успешно вошел в систему.")
             self.username=username
             #создать токен сессии
             self.token_ses = self.generate_token()
             return True
         else:
             self.status_session = 'error_ses'# меняем статус сессии
-            print(f"aut_Ошибка входа: неверное имя пользователя или пароль.")
+            print(f"aut_login_Ошибка входа: неверное имя пользователя или пароль.")
             return False
 #
     def generate_token(self):
         return secrets.token_hex(16)
 #
     def get_cuurent_user(self):
-        print
+        print(f'aut_gcu_текущий пользователь: {self.username}')
+#
