@@ -22,7 +22,7 @@ session_inst = AuthenticationService() # Создаем экземпляр се�
 ##AuthenticationService.show_sessions()
 auth_service = session_inst.register(user_class="Customer", username="Василий", email="jhf@by", password="0986667qwerty", address="Минск, ул. Советская, 3")
 #auth_service = session_inst.register(user_class="Admin",username="Жора",email="hgf5@8j22h.by", password="098777qwerty", admin_level=4)
-#print(f"sh_Результат регистрации: {auth_service}")
+print(f"sh_Результат регистрации: {auth_service}")
 #открытые сессии:
 AuthenticationService.show_sessions()
 # Закрываем сессию после регистрации
@@ -31,17 +31,18 @@ session_inst.log_out()
 # Выводим список всех пользователей после регистрации нового пользователя
 print("sh_Список всех пользователей после регистрации нового пользователя:")
 print(Admin.get_all_users())
+print("открываем новую сессию для входа очередного пользователя")
 #открытые сессии:
 AuthenticationService.show_sessions()        
 # вход существующего пользователя в систему
 # Создаем новый экземпляр сервиса аутентификации - сессия
 session_inst = AuthenticationService()
 # Попытка входа пользователя с правильными данными
-auth_service_2 = session_inst.log_in(username="Вася", password="12345qwerty$")
-print(f"sh_Результат входа пользователя: {auth_service_2}")
+auth_service_2 = session_inst.log_in(username="админ_1", password="12345qwerty")
+print(f"sh_Результат входа пользователя: {auth_service_2} : {session_inst}")
 #
 # закрываем сессию - выход пользователя
-#session_inst.log_out()
-#
-#
+session_inst.log_out()
+# нет открытых сессий?
+AuthenticationService.show_sessions()  
 #

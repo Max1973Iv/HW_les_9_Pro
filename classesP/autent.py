@@ -6,16 +6,18 @@
    Сервис поддерживает два класса пользователей: Customer и Admin.'''
 from datetime import datetime
 from classesP.users import User
+import secrets
 class AuthenticationService:
     # список созданных сессий
     sessions = []
     #
-    def __init__(self,username=None,start_time=None,fin_time=None,status_session='active_ses'):
+    def __init__(self,username=None,start_time=None,fin_time=None,status_session='active_ses',token_ses=None):
         self.username = username # имя пользователя
         self.start_time = start_time # время начала сессии
         self.fin_time = fin_time # время окончания сессии
         self.start_time = self.x_time()+"_st" # устанавливаем время начала сессии
         self.status_session = status_session # статус сессии
+        self.token_ses = token_ses #токен сессии
         # Добавляем текущую сессию в список открытых сессий
         AuthenticationService.sessions.append(self)
         print(f"aut_init_Сессия создана и начата в: {self.start_time}")
@@ -30,7 +32,7 @@ class AuthenticationService:
         """ Метод для строкового представления сессии
         Возвращает строку с информацией о пользователе, времени начала и окончания сессии и статусе сессии.
         """
-        return f"aut_str_Сессия пользователя: {self.username}, Начало: {self.start_time}, Окончание: {self.fin_time}, Статус: {self.status_session}"
+        return f"aut_str_Сессия пользователя: {self.username}, Начало: {self.start_time}, Окончание: {self.fin_time}, Статус: {self.status_session}, токен: {self.token_ses}"
 #
     def __del__(self):
         print(f"aut_del_сессия пользователя: {self.username} завершена в {self.fin_time} статус {self.status_session}")
@@ -133,7 +135,7 @@ class AuthenticationService:
         """
         if self.status_session=='error_ses':
             self.fin_time = self.x_time()+"_fin"
-            print(f"aut_logout_Ошибка регистрации,сессия {self} завершена с ошибкой")
+            print(f"aut_logout_сессия {self} завершена с ошибкой")
         else:
             self.status_session = 'completed_ses'
             self.fin_time = self.x_time()+"_fin"
@@ -154,7 +156,17 @@ class AuthenticationService:
         user = next((user for user in User.users if user.username == username), None)
         if user and User.verify_password(user.password, password):
             print(f"aut_Пользователь {username} успешно вошел в систему.")
+            self.username=username
+            #создать токен сессии
+            self.token_ses = self.generate_token()
             return True
         else:
+            self.status_session = 'error_ses'# меняем статус сессии
             print(f"aut_Ошибка входа: неверное имя пользователя или пароль.")
-            return False    
+            return False
+#
+    def generate_token(self):
+        return secrets.token_hex(16)
+#
+    def get_cuurent_user(self):
+        print
