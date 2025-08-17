@@ -13,16 +13,14 @@ customer2 = Customer(username="Вася", email="aaa@jhf.bu", password = "12345q
 #
 # Выводим список всех пользователей
 print("Список всех ранее зарегистрированных пользователей:")
-print(Admin.get_all_users()) # Выводим список всех пользователей
+print(Admin.get_all_users())
 #
 # Регистрация нового пользователя через сервис аутентификации
 session_inst = AuthenticationService() # Создаем экземпляр сервиса аутентификации -сессия
-# Регистрация нового пользователя
-##
-##AuthenticationService.show_sessions()
+# регистрируем пользователя
 auth_service = session_inst.register(user_class="Customer", username="Василий", email="jhf@by", password="0986667qwerty", address="Минск, ул. Советская, 3")
 #auth_service = session_inst.register(user_class="Admin",username="Жора",email="hgf5@8j22h.by", password="098777qwerty", admin_level=4)
-print(f"sh_Результат регистрации: {auth_service}")
+#print(f"sh_Результат регистрации: {auth_service}")
 #открытые сессии:
 AuthenticationService.show_sessions()
 # Закрываем сессию после регистрации
@@ -31,9 +29,8 @@ session_inst.log_out()
 # Выводим список всех пользователей после регистрации нового пользователя
 print("sh_Список всех пользователей после регистрации нового пользователя:")
 print(Admin.get_all_users())
-print("открываем новую сессию для входа очередного пользователя")
-#открытые сессии:
-AuthenticationService.show_sessions()        
+#
+print("открываем новую сессию для входа очередного пользователя")      
 # вход существующего пользователя в систему
 # Создаем новый экземпляр сервиса аутентификации - сессия
 session_inst = AuthenticationService()
@@ -41,13 +38,11 @@ session_inst = AuthenticationService()
 auth_service_2 = session_inst.log_in(username="админ_1", password="12345qwerty")
 print(f"sh_Результат входа пользователя: {auth_service_2} : {session_inst}")
 print(session_inst.get_cuurent_user())
-# выводим список всех пользователей
-print(Admin.get_all_users())
+#
 # удаляем пользователя по имени
-Admin.delete_user("Василий")
+Admin.delete_user("Максим")
+print('sh_список пользователей после удаления пользователя')
 print(Admin.get_all_users())
 # закрываем сессию - выход пользователя
 session_inst.log_out()
-# нет открытых сессий?
-AuthenticationService.show_sessions()  
 #
