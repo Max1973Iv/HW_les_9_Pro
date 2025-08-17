@@ -54,7 +54,6 @@ class AuthenticationService:
             for session in cls.sessions:
                 print(f"aut_sh_Сессия {session.status_session} пользователя '{session.username}' начата в {session.start_time} 'завершена в' {session.fin_time if session.fin_time else 'еще не завершена'}")
 #    
-#
     def x_time(self):
         """ Возвращает дату и время события сессии
         """
@@ -166,8 +165,14 @@ class AuthenticationService:
             return False
 #
     def generate_token(self):
+        '''
+        метод генерирует токен сессии
+        '''
         return secrets.token_hex(16)
 #
     def get_cuurent_user(self):
+        '''
+        метод выводит информацию о текущем пользователе
+        '''
         print(f'aut_gcu_текущий пользователь: {self.username}')
 #

@@ -81,7 +81,7 @@ class Admin(User):
 #
     @staticmethod
     def delete_user(username):
-        print(f'us_del_us_ {username} вызван')
+##        print(f'us_del_us_ {username} вызван')
         for user in User.users:
             if user.username==username:
                 User.users.remove(user)

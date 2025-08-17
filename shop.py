@@ -2,7 +2,7 @@ from classesP.users import Customer, Admin
 from classesP.autent import AuthenticationService
 import sys
 # Настройка кодировки вывода для корректного отображения русских символов
-sys.stdout.reconfigure(encoding='utf-8')
+sys.stdout.reconfigure(encoding='utf-8') # type: ignore
 #
 # имеющиеся пользователи
 # Создаем несколько пользователей для демонстрации работы сервиса аутентификации
